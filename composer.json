@@ -1,0 +1,14 @@
+{
+    "name": "jankx/template-engine",
+    "description": "The template engine for Jankx Framework",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Puleeno Nguyen",
+            "email": "puleeno@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
