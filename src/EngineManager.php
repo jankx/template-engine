@@ -5,8 +5,7 @@ if (!class_exists(EngineManager::class)) {
     class EngineManager
     {
         protected static $instance;
-
-        protected $defaultTemplateEngine;
+        protected static $engines;
 
         public static function instance()
         {
@@ -16,29 +15,33 @@ if (!class_exists(EngineManager::class)) {
             return self::$instance;
         }
 
-        public static function __callStatic($name, $argv)
+        public static function createEngine($id, $engineName = 'wordpress', $args = array())
         {
-            if (empty(self::$instance)) {
-                throw new Error('Call the template engine when the engine is not initialized');
+            $engines = apply_filters('jankx_template_engines', [
+                'wordpress' => WordPress::class,
+            ]);
+
+            if (!isset($engines[$engineName]) || !class_exists($engines[$engineName])) {
+                throw new \Error('The template engine is not supported.');
             }
-            $callback = [self::$instance, $name];
-            if (!is_callable($callback)) {
-                throw new Error(sprintf('Call method %s::%s is not defined', get_class(self::$instance), $name));
+            $engine = new $engines[$engineName]($args);
+            if (!($engine instanceof Engine)) {
+                throw new \Error(
+                    sprintf('The template engine must is an instance of %s', Engine::class)
+                );
             }
 
-            return call_user_func_array($callback, $argv);
+            self::$engines[$id] = $engine;
+
+            return self::$engines[$id];
         }
 
-        public function __construct()
+        public static function getEngine($id)
         {
-        }
-
-        public function setDefaultTemplateEngine($engine)
-        {
-            if (!($engine instanceof EngineAbstract)) {
-                throw new Error(sprintf('%s class must is an instance of %s', __CLASS__, EngineAbstract::class));
+            if (empty(self::$engines[$id])) {
+                return;
             }
-            $this->defaultTemplateEngine = apply_filters('jankx_template_engine', $engine);
+            return self::$engines[$id];
         }
     }
 }
