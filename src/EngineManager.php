@@ -17,20 +17,29 @@ if (!class_exists(EngineManager::class)) {
 
         public static function createEngine($id, $engineName = 'wordpress', $args = array())
         {
-            $engines = apply_filters('jankx_template_engines', [
+            $engine_classes = apply_filters('jankx_template_engines', [
                 'wordpress' => WordPress::class,
             ]);
 
-            if (!isset($engines[$engineName]) || !class_exists($engines[$engineName])) {
+            if (!isset($engine_classes[$engineName]) || !class_exists($engine_classes[$engineName])) {
                 throw new \Error('The template engine is not supported.');
             }
-            $engine = new $engines[$engineName]($args);
+            $engine = new $engine_classes[$engineName](wp_parse_args(
+                $args,
+                array(
+                    'id' => $id,
+                ),
+            ));
+
             if (!($engine instanceof Engine)) {
                 throw new \Error(
                     sprintf('The template engine must is an instance of %s', Engine::class)
                 );
             }
 
+            /**
+             * Save the engine in EngineManager
+             */
             self::$engines[$id] = $engine;
 
             return self::$engines[$id];

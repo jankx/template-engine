@@ -1,6 +1,6 @@
 <?php
 namespace Jankx\Template\Engine;
 
-abstract class Engine extends EngineInterface
+abstract class Engine implements EngineInterface
 {
 }
