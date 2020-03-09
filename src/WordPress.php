@@ -18,7 +18,10 @@ class WordPress extends Engine
         if (!file_exists($dir)) {
             throw new \Error(sprintf('Directory %s is not exists', $dir));
         }
-        $this->defaultTemplateDir = $dir;
+        $this->defaultTemplateDir = apply_filters(
+            "jankx_template_{$dir}_default_directory",
+            $dir
+        );
     }
 
     public function setDirectoryInTheme($dirName)
