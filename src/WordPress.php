@@ -15,9 +15,6 @@ class WordPress extends Engine
 
     public function setDefaultTemplateDir($dir)
     {
-        if (!file_exists($dir)) {
-            throw new \Error(sprintf('Directory %s is not exists', $dir));
-        }
         $this->defaultTemplateDir = apply_filters(
             "jankx_template_{$dir}_default_directory",
             $dir
