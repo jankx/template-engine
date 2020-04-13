@@ -29,10 +29,15 @@ class WordPress extends Engine
     public function render($templates, $data = [], $echo = true)
     {
         $searchedTemplates = [];
+        $is_mobile = apply_filters('jankx_is_mobile_template', wp_is_mobile());
+
         foreach ((array)$templates as $template) {
             $tmp = '%1$s.%2$s';
             if ($this->directoryInTheme !== '') {
                 $tmp = '%3$s/%1$s.%2$s';
+            }
+            if ($is_mobile) {
+                $searchedTemplates[] = sprintf($tmp, $template, $this->extension, 'mobile');
             }
             $searchedTemplates[] = sprintf($tmp, $template, $this->extension, $this->directoryInTheme);
         }
