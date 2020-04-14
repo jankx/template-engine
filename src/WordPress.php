@@ -29,7 +29,7 @@ class WordPress extends Engine
     public function render($templates, $data = [], $echo = true)
     {
         $searchedTemplates = [];
-        $is_mobile = apply_filters('jankx_is_mobile_template', wp_is_mobile());
+        $is_mobile = jankx_is_mobile_template();
 
         foreach ((array)$templates as $template) {
             $tmp = '%1$s.%2$s';
