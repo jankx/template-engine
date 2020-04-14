@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/jankx/helpers.git",
-                "reference": "9fe5d82c6601f9aa8b4612261034e3d63b8c9e86"
+                "reference": "98e5c06724d07de99679d554b499a9cf54e2224a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jankx/helpers/zipball/9fe5d82c6601f9aa8b4612261034e3d63b8c9e86",
-                "reference": "9fe5d82c6601f9aa8b4612261034e3d63b8c9e86",
+                "url": "https://api.github.com/repos/jankx/helpers/zipball/98e5c06724d07de99679d554b499a9cf54e2224a",
+                "reference": "98e5c06724d07de99679d554b499a9cf54e2224a",
                 "shasum": ""
             },
             "type": "library",
