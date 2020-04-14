@@ -10,7 +10,9 @@
         }
     ],
     "minimum-stability": "dev",
-    "require": {},
+    "require": {
+        "jankx/helpers": "dev-master"
+    },
     "autoload": {
         "psr-4": {
             "Jankx\\Template\\Engine\\": "src/"
