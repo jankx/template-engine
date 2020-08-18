@@ -28,7 +28,7 @@ if (!class_exists(EngineManager::class)) {
                 $args,
                 array(
                     'id' => $id,
-                ),
+                )
             ));
 
             if (!($engine instanceof Engine)) {
