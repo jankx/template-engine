@@ -70,10 +70,10 @@ if (!class_exists(EngineManager::class)) {
             return static::$engines[$id];
         }
 
-        public static function getEngine($id)
+        public static function getEngine($id = null)
         {
             if (empty(static::$engines[$id])) {
-                return;
+                return static::$engines;
             }
             return static::$engines[$id];
         }
