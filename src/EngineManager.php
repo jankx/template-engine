@@ -7,15 +7,30 @@ if (!class_exists(EngineManager::class)) {
         protected static $instance;
         protected static $engines;
 
-        public static function instance()
+        public static function getInstance()
         {
-            if (is_null(self::$instance)) {
-                self::$instance = new self();
+            if (is_null(static::$instance)) {
+                static::$instance = new self();
             }
-            return self::$instance;
+            return static::$instance;
         }
 
-        public static function createEngine($id, $engineName = 'wordpress', $args = array())
+        private function __construct()
+        {
+            $this->loadHelpers();
+
+            do_action('jankx_template_engine_init');
+        }
+
+        protected function loadHelpers()
+        {
+            $helperLoader = realpath(dirname(__FILE__) . '/../../helpers/loader.php');
+            if (file_exists($helperLoader)) {
+                require_once $helperLoader;
+            }
+        }
+
+        protected function create($id, $engineName = 'wordpress', $args = array())
         {
             $engine_classes = apply_filters('jankx_template_engines', [
                 'wordpress' => WordPress::class,
@@ -37,20 +52,30 @@ if (!class_exists(EngineManager::class)) {
                 );
             }
 
+            return $engine;
+        }
+
+        public static function createEngine($id, $engineName = 'wordpress', $args = array())
+        {
+            $engine = static::getInstance()->create(
+                $id,
+                $engineName,
+                $args
+            );
             /**
              * Save the engine in EngineManager
              */
-            self::$engines[$id] = $engine;
+            static::$engines[$id] = $engine;
 
-            return self::$engines[$id];
+            return static::$engines[$id];
         }
 
         public static function getEngine($id)
         {
-            if (empty(self::$engines[$id])) {
+            if (empty(static::$engines[$id])) {
                 return;
             }
-            return self::$engines[$id];
+            return static::$engines[$id];
         }
     }
 }
