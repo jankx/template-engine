@@ -32,22 +32,35 @@ if (!class_exists(EngineManager::class)) {
 
         protected function create($id, $engineName = 'wordpress', $args = array())
         {
+            $args = wp_parse_args($args, array(
+                'template_directory' => null,
+                'template_location' => null,
+            ));
+
+            if (isset($args['template_directory'], $args['template_location'])) {
+                throw new \Exception(__('Please set template directory location informations', 'jankx'));
+            }
+
             $engine_classes = apply_filters('jankx_template_engines', [
                 'wordpress' => WordPress::class,
             ]);
 
             if (!isset($engine_classes[$engineName]) || !class_exists($engine_classes[$engineName])) {
-                throw new \Error('The template engine is not supported.');
+                throw new \Exception(sprintf(
+                    'The `%s` template engine is not supported.',
+                    $engineName
+                ));
             }
-            $engine = new $engine_classes[$engineName](wp_parse_args(
-                $args,
-                array(
-                    'id' => $id,
-                )
-            ));
 
+            // Create the template for Jankx Framework
+            $engine = new $engine_classes[$engineName](
+                $id,
+                $args['template_directory'],
+                $args['template_location'],
+                $args
+            );
             if (!($engine instanceof Engine)) {
-                throw new \Error(
+                throw new \Exception(
                     sprintf('The template engine must is an instance of %s', Engine::class)
                 );
             }

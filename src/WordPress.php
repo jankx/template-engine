@@ -7,12 +7,6 @@ class WordPress extends Engine
     protected $directoryInTheme;
     protected $extension = 'php';
 
-    public function __construct($args)
-    {
-        $this->setDefaultTemplateDir($args['template_location']);
-        $this->setDirectoryInTheme($args['template_directory']);
-    }
-
     public function setDefaultTemplateDir($dir)
     {
         $this->defaultTemplateDir = apply_filters(
