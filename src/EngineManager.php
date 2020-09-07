@@ -37,7 +37,7 @@ if (!class_exists(EngineManager::class)) {
                 'template_location' => null,
             ));
 
-            if (isset($args['template_directory'], $args['template_location'])) {
+            if (!isset($args['template_directory'], $args['template_location'])) {
                 throw new \Exception(__('Please set template directory location informations', 'jankx'));
             }
 
