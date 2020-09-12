@@ -7,5 +7,7 @@ interface EngineInterface
 
     public function setDirectoryInTheme($dirName);
 
+    public function searchTemplate($templates);
+
     public function render($templates, $data = [], $echo = true);
 }

@@ -20,7 +20,7 @@ class WordPress extends Engine
         $this->directoryInTheme = $dirName;
     }
 
-    public function render($templates, $data = [], $echo = true)
+    public function searchTemplate($templates)
     {
         $searchedTemplates = [];
         $is_mobile = jankx_is_mobile_template();
@@ -40,6 +40,12 @@ class WordPress extends Engine
             $template = $this->searchDefaultTemplate($templates);
         }
 
+        return $template;
+    }
+
+    public function render($templates, $data = [], $echo = true)
+    {
+        $template = $this->searchTemplate($templates);
         if (empty($template)) {
             return;
         }
