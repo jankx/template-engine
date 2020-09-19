@@ -22,20 +22,16 @@ class WordPress extends Engine
 
     public function searchTemplate($templates)
     {
-        $searchedTemplates = [];
-        $is_mobile = jankx_is_mobile_template();
+        $searchTemplates = [];
 
         foreach ((array)$templates as $template) {
             $tmp = '%1$s.%2$s';
             if ($this->directoryInTheme !== '') {
                 $tmp = '%3$s/%1$s.%2$s';
             }
-            if ($is_mobile) {
-                $searchedTemplates[] = sprintf($tmp, $template, $this->extension, 'mobile');
-            }
-            $searchedTemplates[] = sprintf($tmp, $template, $this->extension, $this->directoryInTheme);
+            $searchTemplates[] = sprintf($tmp, $template, $this->extension, $this->directoryInTheme);
         }
-        $template = locate_template($searchedTemplates, false);
+        $template = locate_template($searchTemplates, false);
         if (!$template) {
             $template = $this->searchDefaultTemplate($templates);
         }
