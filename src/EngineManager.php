@@ -36,6 +36,7 @@ if (!class_exists(EngineManager::class)) {
                 'template_directory' => null,
                 'template_location' => null,
             ));
+            $args = apply_filters('jankx_template_engine_args', $args, $engineName, $id);
 
             if (!isset($args['template_directory'], $args['template_location'])) {
                 throw new \Exception(__('Please set template directory location informations', 'jankx'));
