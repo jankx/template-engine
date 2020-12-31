@@ -45,8 +45,10 @@ class WordPress extends Engine
         if (empty($template)) {
             return;
         }
+        if (is_array($data)) {
+            extract($data);
+        }
 
-        extract($data);
         if (!$echo) {
             ob_start();
             require $template;
