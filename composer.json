@@ -9,7 +9,6 @@
             "email": "puleeno@gmail.com"
         }
     ],
-    "minimum-stability": "dev",
     "require": {
         "jankx/helpers": "*"
     },
