@@ -3,9 +3,16 @@ namespace Jankx\Template\Engine;
 
 class WordPress extends Engine
 {
+    const ENGINE_NAME = 'wordpress';
+
     protected $defaultTemplateDir;
     protected $directoryInTheme;
     protected $extension = 'php';
+
+    public function getName()
+    {
+        return static::ENGINE_NAME;
+    }
 
     public function setDefaultTemplateDir($dir)
     {

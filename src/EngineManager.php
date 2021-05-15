@@ -66,6 +66,10 @@ if (!class_exists(EngineManager::class)) {
                 );
             }
 
+            do_action_ref_array("jankx_setup_{$engine->getName()}_engine_enviroment", array(
+                &$engine,
+            ));
+
             return $engine;
         }
 

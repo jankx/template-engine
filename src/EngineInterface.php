@@ -3,6 +3,8 @@ namespace Jankx\Template\Engine;
 
 interface EngineInterface
 {
+    public function getName();
+
     public function setDefaultTemplateDir($dir);
 
     public function setDirectoryInTheme($dirName);
