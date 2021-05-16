@@ -2,7 +2,6 @@
 namespace Jankx\TemplateEngine;
 
 use Jankx\TemplateEngine\Engines\Plates;
-use Jankx\TemplateEngine\Engines\WordPress;
 
 if (!class_exists(EngineManager::class)) {
     class EngineManager
@@ -36,7 +35,7 @@ if (!class_exists(EngineManager::class)) {
             }
 
             $engine_classes = apply_filters('jankx_template_engines', [
-                'wordpress' => WordPress::class,
+                'wordpress' => Plates::class,
                 'blades' => Plates::class,
             ]);
 
