@@ -20,7 +20,7 @@ class Data
 
     public function all()
     {
-        is_array(static::$data) {
+        if (is_array(static::$data)) {
             return static::$data;
         }
         return array();
