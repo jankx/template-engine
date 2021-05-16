@@ -18,7 +18,7 @@ class Data
         return $defaultValue;
     }
 
-    public function all()
+    public static function all()
     {
         if (is_array(static::$data)) {
             return static::$data;
