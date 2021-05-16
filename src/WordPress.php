@@ -52,9 +52,12 @@ class WordPress extends Engine
         if (empty($template)) {
             return;
         }
-        if (is_array($data)) {
-            extract($data);
+        if (!is_array($data)) {
+            $data = (array)$data;
         }
+        $data = array_merge(Data::all(), $data);
+
+        extract($data);
 
         if (!$echo) {
             ob_start();
