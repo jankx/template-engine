@@ -76,4 +76,9 @@ class WordPress extends Engine
             }
         }
     }
+
+    public function isRenderDirectly()
+    {
+        return true;
+    }
 }
