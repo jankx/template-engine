@@ -19,17 +19,7 @@ if (!class_exists(EngineManager::class)) {
 
         private function __construct()
         {
-            $this->loadHelpers();
-
             do_action('jankx_template_engine_init');
-        }
-
-        protected function loadHelpers()
-        {
-            $helperLoader = realpath(dirname(__FILE__) . '/../../helpers/loader.php');
-            if (file_exists($helperLoader)) {
-                require_once $helperLoader;
-            }
         }
 
         protected function create($id, $engineName = 'wordpress', $args = array())
