@@ -12,4 +12,6 @@ interface EngineInterface
     public function searchTemplate($templates);
 
     public function render($templates, $data = [], $echo = true);
+
+    public function isRenderDirectly();
 }
