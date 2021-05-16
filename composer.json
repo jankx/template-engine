@@ -16,7 +16,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Jankx\\Template\\Engine\\": "src/"
+            "Jankx\\TemplateEngine\\": "src/"
         }
     }
 }

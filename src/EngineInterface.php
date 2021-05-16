@@ -1,5 +1,5 @@
 <?php
-namespace Jankx\Template\Engine;
+namespace Jankx\TemplateEngine;
 
 interface EngineInterface
 {
