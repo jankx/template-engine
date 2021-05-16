@@ -1,5 +1,5 @@
 <?php
-namespace Jankx\TemplateEngine;
+namespace Jankx\TemplateEngine\Engines;
 
 class WordPress extends Engine
 {

@@ -14,4 +14,6 @@ interface EngineInterface
     public function render($templates, $data = [], $echo = true);
 
     public function isRenderDirectly();
+
+    public function getEngine();
 }
