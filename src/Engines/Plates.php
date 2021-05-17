@@ -36,4 +36,8 @@ class Plates extends Engine
     {
         return false;
     }
+
+    public function getEngine()
+    {
+    }
 }

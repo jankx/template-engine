@@ -1,17 +1,60 @@
 <?php
 namespace Jankx\TemplateEngine;
 
+use Jankx\TemplateEngine\Engines\Plates;
+
 abstract class Engine implements EngineInterface
 {
+    protected static $support_engines;
+
     protected $id;
-    protected $args;
+    protected $args = array();
 
-    public function __construct($id, $template_directory, $template_location, $args)
+    protected static function get_support_engines()
     {
-        $this->id = $id;
-        $this->args = $args;
+        return apply_filters('jankx_template_engines', [
+            'wordpress' => Plates::class,
+            Plates::ENGINE_NAME     => Plates::class,
+        ]);
+    }
 
-        $this->setDefaultTemplateDir($template_location);
-        $this->setDirectoryInTheme($template_directory);
+    public static function create($id, $engine_name = null)
+    {
+        if (is_null($engine_name)) {
+            $engine_name = Plates::ENGINE_NAME;
+        }
+        if (is_null(static::$support_engines)) {
+            static::$support_engines = static::get_support_engines();
+        }
+
+        if (isset(static::$support_engines[$engine_name])) {
+            $engineCls = static::$support_engines[$engine_name];
+
+            $engine = new $engineCls();
+            $engine->setId($id);
+
+            return $engine;
+        }
+    }
+
+    public function setId($id)
+    {
+        if (empty($id)) {
+            throw \Exception('Engine ID must be have a value');
+        }
+        $this->id = $id;
+    }
+
+    public function setArgs($args)
+    {
+        if (!is_array($args)) {
+            return;
+        }
+
+        $this->args = array_merge($this->args, $args);
+    }
+
+    public function setupEnvironment()
+    {
     }
 }
