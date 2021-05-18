@@ -10,6 +10,14 @@ class Data
         static::$data[$key] = $value;
     }
 
+    public static function shares($data)
+    {
+        if (!is_array($data)) {
+            return false;
+        }
+        static::$data = array_merge(static::$data, $data);
+    }
+
     public static function get($key, $defaultValue = null)
     {
         if (isset(static::$data[$key])) {
