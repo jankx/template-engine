@@ -84,9 +84,9 @@ class Plates extends EngineAbstract
         echo $content;
     }
 
-    public function isRenderDirectly()
+    public function isDirectRender()
     {
-        return false;
+        return true;
     }
 
     public function getEngine()
