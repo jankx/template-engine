@@ -9,6 +9,8 @@ class Plates extends EngineAbstract
     const ENGINE_NAME = 'plates';
 
     protected $templates;
+    protected $childThemeHasTemplates = false;
+    protected $themeHasTemplates = false;
 
     public function getName()
     {
@@ -22,39 +24,58 @@ class Plates extends EngineAbstract
 
     public function setDirectoryInTheme($dirName)
     {
-        if (is_child_theme()) {
+        $childThemeTemplatesDir = sprintf(
+            '%s/%s',
+            rtrim(get_stylesheet_directory(), '/'),
+            $dirName
+        );
+        if (is_child_theme() && is_dir($childThemeTemplatesDir)) {
             $this->templates->addFolder(
                 'child',
-                sprintf(
-                    '%s/%s',
-                    rtrim(get_stylesheet_directory(), '/'),
-                    $dirName
-                ),
+                $childThemeTemplatesDir,
                 true
             );
+            $this->childThemeHasTemplates = true;
         }
-        $this->templates->addFolder(
-            'theme',
-            sprintf(
-                '%s/%s',
-                rtrim(get_template_directory(), '/'),
-                $dirName
-            ),
-            true
+
+        $themeTemplatesDir = sprintf(
+            '%s/%s',
+            rtrim(get_template_directory(), '/'),
+            $dirName
         );
+        if (is_dir($themeTemplatesDir)) {
+            $this->templates->addFolder(
+                'theme',
+                $themeTemplatesDir,
+                true
+            );
+            $this->themeHasTemplates = true;
+        }
+    }
+
+    public function generateTemplatesWithFolders($template)
+    {
+        $templates = array();
+        
+        if ($this->childThemeHasTemplates) {
+            $templates[] = sprintf('child::%s', $template);
+        }
+        if ($this->themeHasTemplates) {
+            $templates[] = sprintf('theme::%s', $template);
+        }
+        $templates[] = $template;
+
+        return $templates;
     }
 
     public function searchTemplate($templates)
     {
-        $is_child_theme = is_child_theme();
-        foreach((array)$templates as $template) {
-            if ($is_child_theme && $this->templates->exists('child::' . $template)) {
-                return $this->templates->path('child::' . $template);
-            } elseif ($this->templates->exists('theme::' . $template)) {
-                return $this->templates->path('theme::' . $template);
-            }
-            if ($this->templates->exists($template)) {
-                return $this->templates->path($template);
+        foreach ((array)$templates as $template) {
+            foreach ($this->generateTemplatesWithFolders($template) as $templateWidthFolder) {
+                if (!$this->templates->exists($templateWidthFolder)) {
+                    continue;
+                }
+                return $this->templates->path($templateWidthFolder);
             }
         }
         return false;
@@ -62,18 +83,17 @@ class Plates extends EngineAbstract
 
     public function render($templates, $data = array(), $echo = true)
     {
-        $is_child_theme = is_child_theme();
         $content = '';
-        foreach((array)$templates as $template) {
-            if ($is_child_theme && $this->templates->exists('child::' . $template)) {
-                $content = $this->templates->render('child::' . $template, $data);
-                break;
-            } elseif ($this->templates->exists('theme::' . $template)) {
-                $content = $this->templates->render('theme::' . $template, $data);
+        foreach ((array)$templates as $template) {
+            foreach ($this->generateTemplatesWithFolders($template) as $templateWidthFolder) {
+                if (!$this->templates->exists($templateWidthFolder)) {
+                    continue;
+                }
+                $content = $this->templates->render($templateWidthFolder, $data);
                 break;
             }
-            if ($this->templates->exists($template)) {
-                $content = $this->templates->render($template, $data);
+
+            if ($content) {
                 break;
             }
         }
