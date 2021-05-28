@@ -33,7 +33,7 @@ class FunctionWrapper
     public function execute()
     {
         if (!$this->use_ob) {
-            return call_user_method_array($this->fn, $this->args);
+            return call_user_func_array($this->fn, $this->args);
         }
 
         ob_start();
