@@ -1,11 +1,11 @@
 <?php
 namespace Jankx\TemplateEngine;
 
-class Data
+class Context
 {
     protected static $data = array();
 
-    public static function share($key, $value)
+    public static function add($key, $value)
     {
         static::$data[$key] = $value;
     }
@@ -18,19 +18,15 @@ class Data
         static::$data = array_merge(static::$data, $data);
     }
 
-    public static function get($key, $defaultValue = null)
+    public static function get($key = null, $defaultValue = null)
     {
+        if (is_null($key)) {
+            return static::$data;
+        }
+
         if (isset(static::$data[$key])) {
             return static::$data[$key];
         }
         return $defaultValue;
-    }
-
-    public static function all()
-    {
-        if (is_array(static::$data)) {
-            return static::$data;
-        }
-        return array();
     }
 }
