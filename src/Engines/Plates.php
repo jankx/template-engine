@@ -56,7 +56,7 @@ class Plates extends EngineAbstract
     public function generateTemplatesWithFolders($template)
     {
         $templates = array();
-        
+
         if ($this->childThemeHasTemplates) {
             $templates[] = sprintf('child::%s', $template);
         }
