@@ -22,10 +22,12 @@ class FunctionWrapper
             return '';
         }
         try {
-            return (string) $this->execute();
+            $result = $this->execute();
+            if (is_array($result)) {
+                return implode(' ', $result);
+            }
+            return (string) $result;
         } catch (\Exception $e) {
-            var_dump(call_user_func($this->fn));
-            die;
             return 'Caught exception: '.$e->getMessage()."\n";
         }
     }
