@@ -21,8 +21,12 @@ abstract class Engine implements EngineInterface
     public static function create($id, $engine_name = null)
     {
         if (is_null($engine_name)) {
-            $engine_name = Plates::ENGINE_NAME;
+            $engine = new static();
+            $engine->setId($id);
+
+            return $engine;
         }
+
         if (is_null(static::$support_engines)) {
             static::$support_engines = static::get_support_engines();
         }

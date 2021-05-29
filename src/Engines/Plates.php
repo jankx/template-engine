@@ -11,6 +11,7 @@ class Plates extends EngineAbstract
     protected $templates;
     protected $childThemeHasTemplates = false;
     protected $themeHasTemplates = false;
+    protected $extension = 'php';
 
     public function getName()
     {
@@ -51,6 +52,11 @@ class Plates extends EngineAbstract
             );
             $this->themeHasTemplates = true;
         }
+    }
+
+    public function setupEnvironment()
+    {
+        $this->templates->setFileExtension($this->extension);
     }
 
     public function generateTemplatesWithFolders($template)
