@@ -2,6 +2,7 @@
 namespace Jankx\TemplateEngine;
 
 use Jankx\TemplateEngine\Engines\Plates;
+use Jankx\TemplateEngine\Engines\WordPress;
 
 abstract class Engine implements EngineInterface
 {
