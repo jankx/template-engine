@@ -3,6 +3,7 @@ namespace Jankx\TemplateEngine;
 
 use Jankx\TemplateEngine\Engines\Plates;
 use Jankx\TemplateEngine\Engines\WordPress;
+use Jankx\TemplateEngine\Engines\Latte;
 
 abstract class Engine implements EngineInterface
 {
@@ -14,7 +15,7 @@ abstract class Engine implements EngineInterface
     protected static function get_support_engines()
     {
         return apply_filters('jankx_template_engines', [
-            'wordpress' => Plates::class,
+            WordPress::ENGINE_NAME  => WordPress::class,
             Plates::ENGINE_NAME     => Plates::class,
         ]);
     }
