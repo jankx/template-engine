@@ -112,7 +112,7 @@ class Plates extends EngineAbstract
 
     public function isDirectRender()
     {
-        return true;
+        return false;
     }
 
     public function getEngine()
