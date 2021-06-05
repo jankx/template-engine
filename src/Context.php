@@ -36,10 +36,13 @@ class Context
         if (static::$initilized) {
             return;
         }
-        static::shares(array(
-            'body_class' => new FunctionWrapper('get_body_class', array('join' => ' ')),
-            'open_container' => new FunctionWrapper('jankx_open_container'),
-            'close_container' => new FunctionWrapper('jankx_close_container'),
-        ))
+        static::$data = array_merge(
+            static::$data,
+            array(
+                'body_class' => new FunctionWrapper('get_body_class', array('join' => ' ')),
+                'open_container' => new FunctionWrapper('jankx_open_container'),
+                'close_container' => new FunctionWrapper('jankx_close_container'),
+            )
+        );
     }
 }
