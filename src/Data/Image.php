@@ -4,10 +4,15 @@ namespace Jankx\TemplateEngine\Data;
 class Image
 {
     protected $image_id;
+    protected $specific_size;
 
-    public function __construct($post = null)
+    public function __construct($post = null, $size = null)
     {
         $this->image_id = get_post_thumbnail_id($post);
+
+        if (is_null($size)) {
+            $this->specific_size = $size;
+        }
     }
 
     public function __toString()
@@ -36,11 +41,18 @@ class Image
         }
     }
 
-    public function src($size = 'thumbnail')
+    public function src($size = null)
     {
-        return wp_get_attachment_image_url(
-            $this->image_id,
-            $size
-        );
+        if (!is_null($size)) {
+            return wp_get_attachment_image_url(
+                $this->image_id,
+                $size
+            );
+        }
+        if (is_null($this->specific_size)) {
+            return wp_get_attachment_image_url($this->image_id);
+        }
+
+        return wp_get_attachment_image_url($this->image_id, $this->specific_size);
     }
 }

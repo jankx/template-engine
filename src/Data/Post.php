@@ -39,6 +39,11 @@ class Post
         return new Image($this->_post);
     }
 
+    public function image()
+    {
+        return new Image($this->_post, 'full');
+    }
+
     public function permalink()
     {
         return get_the_permalink($this->__get('ID'));
