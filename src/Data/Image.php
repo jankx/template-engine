@@ -21,7 +21,10 @@ class Image
             return '';
         }
 
-        return wp_get_attachment_image($this->image_id);
+        if (is_null($this->specific_size)) {
+            return wp_get_attachment_image($this->image_id);
+        }
+        return wp_get_attachment_image($this->_image_id, $this->specific_size);
     }
 
     public function __isset($name)

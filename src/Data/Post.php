@@ -4,20 +4,20 @@ namespace Jankx\TemplateEngine\Data;
 
 class Post
 {
-    protected $_post;
+    protected $post;
 
     public function __construct($post = null)
     {
         if (is_null($post)) {
-            $this->_post = &$GLOBALS['post'];
+            $this->post = &$GLOBALS['post'];
         } else {
-            $this->_post = get_post($post);
+            $this->post = getpost($post);
         }
     }
 
     public function __isset($name)
     {
-        if (property_exists($this->_post, $name)) {
+        if (property_exists($this->post, $name)) {
             return true;
         }
         return method_exists($this, $name);
@@ -25,8 +25,8 @@ class Post
 
     public function __get($name)
     {
-        if (property_exists($this->_post, $name)) {
-            return $this->_post->$name;
+        if (property_exists($this->post, $name)) {
+            return $this->post->$name;
         }
         $method = array($this, $name);
         if (is_callable($method)) {
@@ -34,14 +34,19 @@ class Post
         }
     }
 
+    public function has_thumbnail()
+    {
+        return has_post_thumbnail($this->post);
+    }
+
     public function thumbnail()
     {
-        return new Image($this->_post);
+        return new Image($this->post);
     }
 
     public function image()
     {
-        return new Image($this->_post, 'full');
+        return new Image($this->post, 'full');
     }
 
     public function permalink()
