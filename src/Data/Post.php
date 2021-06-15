@@ -26,7 +26,7 @@ class Post
     public function __get($name)
     {
         if (property_exists($this->_post, $name)) {
-            return $this->_post.$name;
+            return $this->_post->$name;
         }
         $method = array($this, $name);
         if (is_callable($method)) {
@@ -36,7 +36,7 @@ class Post
 
     public function thumbnail()
     {
-        return new Image();
+        return new Image($this->_post);
     }
 
     public function permalink()
