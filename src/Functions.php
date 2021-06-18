@@ -57,6 +57,12 @@ class Functions
         }
     }
 
+    public function get_global_var($var_name) {
+        if (isset($GLOBALS[$var_name])) {
+            return $GLOBALS[$var_name];
+        }
+    }
+
     public function getAvailableFunctions()
     {
         $templateFunctions = $this->getTemplateFunctions();
@@ -66,6 +72,7 @@ class Functions
                 'function'  => array(&$this, 'exe_function'),
                 'component' => array(&$this, 'exe_component'),
                 'get_widgets' => array(&$this, 'get_widgets'),
+                'global_var' => array(&$this, 'get_global_var'),
             )
         );
 
