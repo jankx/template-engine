@@ -57,7 +57,8 @@ class Functions
         }
     }
 
-    public function get_global_var($var_name) {
+    public function get_global_var($var_name)
+    {
         if (isset($GLOBALS[$var_name])) {
             return $GLOBALS[$var_name];
         }

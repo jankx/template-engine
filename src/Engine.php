@@ -51,6 +51,11 @@ abstract class Engine implements EngineInterface
         $this->id = $id;
     }
 
+    public function getId()
+    {
+        return $this->id;
+    }
+
     public function setArgs($args)
     {
         if (!is_array($args)) {
