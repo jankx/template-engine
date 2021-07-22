@@ -1,8 +1,10 @@
 <?php
 namespace Jankx\TemplateEngine\Engines;
 
-use Jankx\TemplateEngine\Engine as EngineAbstract;
 use League\Plates\Engine;
+use Jankx\TemplateEngine\Engine as EngineAbstract;
+use Jankx\TemplateEngine\Data\Post;
+use Jankx\TemplateEngine\Data\Site;
 
 class Plates extends EngineAbstract
 {
@@ -57,6 +59,10 @@ class Plates extends EngineAbstract
     public function setupEnvironment()
     {
         $this->templates->setFileExtension($this->extension);
+        $this->templates->addData(array(
+            'post' => new Post(),
+            'site' => new Site(),
+        ));
     }
 
     public function generateTemplatesWithFolders($template)
