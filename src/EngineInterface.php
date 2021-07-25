@@ -16,4 +16,6 @@ interface EngineInterface
     public function isDirectRender();
 
     public function getEngine();
+
+    public function registerFunction($funcName, $callable);
 }

@@ -125,4 +125,13 @@ class Plates extends EngineAbstract
     {
         return $this->templates;
     }
+
+    public function registerFunction($funcName, $callable) {
+        if ($this->templates && is_callable($callable)) {
+            $this->templates->registerFunction(
+                $funcName,
+                $callable
+            );
+        }
+    }
 }
