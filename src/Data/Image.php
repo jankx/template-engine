@@ -8,9 +8,14 @@ class Image
 
     public function __construct($post = null, $size = null)
     {
-        $this->image_id = get_post_thumbnail_id($post);
-
-        if (is_null($size)) {
+        $post = get_post($post);
+        if ($post->post_type === 'attachment') {
+            $this->image_id = $post->ID;
+        } else {
+            $this->image_id = get_post_thumbnail_id($post);
+        }
+        
+        if (!is_null($size)) {
             $this->specific_size = $size;
         }
     }
@@ -20,11 +25,10 @@ class Image
         if ($this->image_id < 1) {
             return '';
         }
-
         if (is_null($this->specific_size)) {
             return wp_get_attachment_image($this->image_id);
         }
-        return wp_get_attachment_image($this->_image_id, $this->specific_size);
+        return wp_get_attachment_image($this->image_id, $this->specific_size);
     }
 
     public function __isset($name)

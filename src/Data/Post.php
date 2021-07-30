@@ -99,11 +99,13 @@ class Post
         return get_the_date('', $this->post);
     }
 
-    public function format() {
+    public function format()
+    {
         return get_post_format($this->post);
     }
 
-    public function meta($meta_key) {
+    public function meta($meta_key)
+    {
         return get_post_meta($this->ID, $meta_key, true);
     }
 }
