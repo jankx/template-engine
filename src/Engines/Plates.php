@@ -83,11 +83,11 @@ class Plates extends EngineAbstract
     public function searchTemplate($templates)
     {
         foreach ((array)$templates as $template) {
-            foreach ($this->generateTemplatesWithFolders($template) as $templateWidthFolder) {
-                if (!$this->templates->exists($templateWidthFolder)) {
+            foreach ($this->generateTemplatesWithFolders($template) as $templateWithFolder) {
+                if (!$this->templates->exists($templateWithFolder)) {
                     continue;
                 }
-                return $this->templates->path($templateWidthFolder);
+                return $this->templates->path($templateWithFolder);
             }
         }
         return false;
@@ -97,11 +97,11 @@ class Plates extends EngineAbstract
     {
         $content = '';
         foreach ((array)$templates as $template) {
-            foreach ($this->generateTemplatesWithFolders($template) as $templateWidthFolder) {
-                if (!$this->templates->exists($templateWidthFolder)) {
+            foreach ($this->generateTemplatesWithFolders($template) as $templateWithFolder) {
+                if (!$this->templates->exists($templateWithFolder)) {
                     continue;
                 }
-                $content = $this->templates->render($templateWidthFolder, $data);
+                $content = $this->templates->render($templateWithFolder, $data);
                 break;
             }
 
