@@ -61,7 +61,7 @@ class Term
         return $this->image_id > 0;
     }
 
-    public function image($size = 'thumbnail', $meta_key)
+    public function image($size = 'thumbnail', $meta_key = '_thumbnail_id')
     {
         if (is_null($this->image_id)) {
             $this->image_id = intval(get_term_meta($this->ID, $meta_key, true));
