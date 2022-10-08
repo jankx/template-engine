@@ -3,7 +3,6 @@ namespace Jankx\TemplateEngine;
 
 use Jankx\TemplateEngine\Engines\Plates;
 use Jankx\TemplateEngine\Engines\WordPress;
-use Jankx\TemplateEngine\Engines\Latte;
 
 abstract class Engine implements EngineInterface
 {
@@ -12,6 +11,9 @@ abstract class Engine implements EngineInterface
     protected $id;
     protected $args = array();
 
+    /**
+     * @return \Jankx\TemplateEngine\EngineInterface[];
+     */
     protected static function get_support_engines()
     {
         return apply_filters('jankx_template_engines', [
@@ -20,6 +22,9 @@ abstract class Engine implements EngineInterface
         ]);
     }
 
+    /**
+     * @return \Jankx\TemplateEngine\EngineInterface
+     */
     public static function create($id, $engine_name = null)
     {
         if (is_null($engine_name)) {
@@ -43,14 +48,20 @@ abstract class Engine implements EngineInterface
         }
     }
 
+    /**
+     * @return void
+     */
     public function setId($id)
     {
         if (empty($id)) {
-            throw \Exception('Engine ID must be have a value');
+            throw new \Exception('Engine ID must be have a value');
         }
         $this->id = $id;
     }
 
+    /**
+     * @return string
+     */
     public function getId()
     {
         return $this->id;
@@ -65,6 +76,9 @@ abstract class Engine implements EngineInterface
         $this->args = array_merge($this->args, $args);
     }
 
+    /**
+     * @return void
+     */
     public function setupEnvironment()
     {
     }
