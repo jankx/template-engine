@@ -31,7 +31,7 @@ class Context
         static::$data = array_merge(
             static::$data,
             array(
-                'body_class' => new FunctionWrapper('get_body_class', array('join' => ' ')),
+                'body_class' => new FunctionWrapper('get_body_class'),
                 'open_container' => new FunctionWrapper('jankx_open_container'),
                 'close_container' => new FunctionWrapper('jankx_close_container'),
             )

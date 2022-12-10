@@ -1,6 +1,8 @@
 <?php
 namespace Jankx\TemplateEngine;
 
+use ReflectionFunction;
+
 class FunctionWrapper
 {
     protected $fn;
@@ -35,6 +37,9 @@ class FunctionWrapper
     public function execute()
     {
         if (!$this->use_ob) {
+            $reflect = new ReflectionFunction($this->fn);
+            $numOfParams = count($reflect->getParameters());
+
             return call_user_func_array($this->fn, $this->args);
         }
 
