@@ -77,7 +77,8 @@ class Post
     {
         return apply_filters(
             'the_title',
-            $this->__get('post_title')
+            $this->__get('post_title'),
+            is_null($this->post) ? 0 : $this->post->ID
         );
     }
 
