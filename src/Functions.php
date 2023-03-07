@@ -22,6 +22,7 @@ class Functions
             'wp_head' => 'wp_head',
             'wp_footer' => 'wp_footer',
             'post_class' => array(Helpers::class, 'post_class'),
+            'array_get' => 'array_get',
         );
     }
 
