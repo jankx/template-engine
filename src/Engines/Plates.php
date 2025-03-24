@@ -1,4 +1,5 @@
 <?php
+
 namespace Jankx\TemplateEngine\Engines;
 
 use League\Plates\Engine;
@@ -80,34 +81,32 @@ class Plates extends EngineAbstract
         return $templates;
     }
 
-    public function searchTemplate($templates)
+    public function searchTemplate($templates, $returnFullPath = true)
     {
         foreach ((array)$templates as $template) {
             foreach ($this->generateTemplatesWithFolders($template) as $templateWithFolder) {
                 if (!$this->templates->exists($templateWithFolder)) {
                     continue;
                 }
-                return $this->templates->path($templateWithFolder);
+                if ($returnFullPath) {
+                    return $this->templates->path($templateWithFolder);
+                }
+
+                return $templateWithFolder;
             }
         }
         return false;
     }
 
+
+
+
     public function render($templates, $data = array(), $echo = true)
     {
         $content = '';
-        foreach ((array)$templates as $template) {
-            foreach ($this->generateTemplatesWithFolders($template) as $templateWithFolder) {
-                if (!$this->templates->exists($templateWithFolder)) {
-                    continue;
-                }
-                $content = $this->templates->render($templateWithFolder, $data);
-                break;
-            }
-
-            if ($content) {
-                break;
-            }
+        $loadingTemplate = $this->searchTemplate($templates, false);
+        if (!empty($loadingTemplate)) {
+            $content = $this->templates->render($loadingTemplate, $data);
         }
 
         if (!$echo) {
