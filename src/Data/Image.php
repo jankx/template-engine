@@ -1,4 +1,5 @@
 <?php
+
 namespace Jankx\TemplateEngine\Data;
 
 class Image
@@ -14,7 +15,7 @@ class Image
         } else {
             $this->image_id = get_post_thumbnail_id($post);
         }
-        
+
         if (!is_null($size)) {
             $this->specific_size = $size;
         }

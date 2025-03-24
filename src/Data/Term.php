@@ -1,4 +1,5 @@
 <?php
+
 namespace Jankx\TemplateEngine\Data;
 
 use WP_Term;

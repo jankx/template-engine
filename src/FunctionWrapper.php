@@ -1,4 +1,5 @@
 <?php
+
 namespace Jankx\TemplateEngine;
 
 use ReflectionFunction;
@@ -30,7 +31,7 @@ class FunctionWrapper
             }
             return (string) $result;
         } catch (\Exception $e) {
-            return 'Caught exception: '.$e->getMessage()."\n";
+            return 'Caught exception: ' . $e->getMessage() . "\n";
         }
     }
 
