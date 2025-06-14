@@ -2,6 +2,10 @@
 
 namespace Jankx\TemplateEngine\Engines;
 
+if (!defined('ABSPATH')) {
+    exit('Cheatin huh?');
+}
+
 use League\Plates\Engine;
 use Jankx\TemplateEngine\Engine as EngineAbstract;
 use Jankx\TemplateEngine\Data\Post;

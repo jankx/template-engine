@@ -2,6 +2,10 @@
 
 namespace Jankx\TemplateEngine;
 
+if (!defined('ABSPATH')) {
+    exit('Cheatin huh?');
+}
+
 use Jankx\TemplateEngine\Engines\Plates;
 use Jankx\TemplateEngine\Engines\WordPress;
 

@@ -2,6 +2,10 @@
 
 namespace Jankx\TemplateEngine;
 
+if (!defined('ABSPATH')) {
+    exit('Cheatin huh?');
+}
+
 class Helpers
 {
     public static function post_class($class = '')

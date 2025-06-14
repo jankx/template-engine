@@ -2,6 +2,10 @@
 
 namespace Jankx\TemplateEngine\Data;
 
+if (!defined('ABSPATH')) {
+    exit('Cheatin huh?');
+}
+
 class Image
 {
     protected $image_id;

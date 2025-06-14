@@ -2,6 +2,10 @@
 
 namespace Jankx\TemplateEngine;
 
+if (!defined('ABSPATH')) {
+    exit('Cheatin huh?');
+}
+
 class Context
 {
     protected static $data = array();
