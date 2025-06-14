@@ -3,7 +3,7 @@
 namespace Jankx\TemplateEngine\Engines;
 
 if (!defined('ABSPATH')) {
-    exit('Cheatin huh?');
+    exit('Cheating huh?');
 }
 
 use League\Plates\Engine;

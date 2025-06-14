@@ -3,7 +3,7 @@
 namespace Jankx\TemplateEngine\Data;
 
 if (!defined('ABSPATH')) {
-    exit('Cheatin huh?');
+    exit('Cheating huh?');
 }
 
 class Menu
