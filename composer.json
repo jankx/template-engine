@@ -9,10 +9,7 @@
             "email": "puleeno@gmail.com"
         }
     ],
-    "require": {
-        "jankx/helpers": "*",
-        "jankx/plates": "*"
-    },
+    "require": {},
     "autoload": {
         "psr-4": {
             "Jankx\\TemplateEngine\\": "src/"
