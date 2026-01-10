@@ -22,6 +22,9 @@ class Context
                 if (!$tempDir && function_exists('wp_upload_dir')) {
                     $uploadDir = wp_upload_dir();
                     $tempDir = sprintf('%s/jankx/latte', $uploadDir['basedir']);
+                    if (!file_exists($tempDir)) {
+                        wp_mkdir_p($tempDir);
+                    }
                 }
                 $engine = new LatteEngine($tempDir);
                 break;
