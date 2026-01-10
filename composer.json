@@ -15,6 +15,9 @@
     "autoload": {
         "psr-4": {
             "Jankx\\TemplateEngine\\": "src/"
-        }
+        },
+        "files": [
+            "src/Helpers.php"
+        ]
     }
 }
