@@ -2,44 +2,44 @@
 
 namespace Jankx\TemplateEngine;
 
-if (!defined('ABSPATH')) {
-    exit('Cheating huh?');
-}
+use Jankx\TemplateEngine\Interfaces\TemplateEngine as TemplateEngineInterface;
+use Jankx\TemplateEngine\Engines\LatteEngine;
 
 class Context
 {
-    protected static $data = array();
-    protected static $initilized = false;
+    protected static array $engines = [];
 
-    public static function add($key, $value)
+    public static function init(string $defaultPath, string $engineName = 'latte', array $options = []): TemplateEngineInterface
     {
-        static::$data[$key] = $value;
+        if (isset(self::$engines[$defaultPath])) {
+            return self::$engines[$defaultPath];
+        }
+
+        $engine = null;
+        switch ($engineName) {
+            case 'latte':
+                $tempDir = $options['tempDir'] ?? null;
+                if (!$tempDir && function_exists('wp_upload_dir')) {
+                    $uploadDir = wp_upload_dir();
+                    $tempDir = sprintf('%s/jankx/latte', $uploadDir['basedir']);
+                }
+                $engine = new LatteEngine($tempDir);
+                break;
+            default:
+                throw new \Exception(sprintf('Template engine "%s" is not supported', $engineName));
+        }
+
+        $templateEngine = new TemplateEngine($engine, $defaultPath);
+        if (isset($options['themePath'])) {
+            $templateEngine->setThemePath($options['themePath']);
+        }
+        self::$engines[$defaultPath] = $templateEngine;
+
+        return $templateEngine;
     }
 
-    public static function get($key = null, $defaultValue = null)
+    public static function get(string $defaultPath): ?TemplateEngineInterface
     {
-        if (is_null($key)) {
-            return static::$data;
-        }
-
-        if (isset(static::$data[$key])) {
-            return static::$data[$key];
-        }
-        return $defaultValue;
-    }
-
-    public static function init()
-    {
-        if (static::$initilized) {
-            return;
-        }
-        static::$data = array_merge(
-            static::$data,
-            array(
-                'body_class' => new FunctionWrapper('get_body_class'),
-                'open_container' => new FunctionWrapper('jankx_open_container'),
-                'close_container' => new FunctionWrapper('jankx_close_container'),
-            )
-        );
+        return self::$engines[$defaultPath] ?? null;
     }
 }

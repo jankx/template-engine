@@ -1,20 +1,19 @@
 <?php
 
-namespace Jankx\TemplateEngine;
+use Jankx\TemplateEngine\Context;
 
-if (!defined('ABSPATH')) {
-    exit('Cheating huh?');
-}
-
-class Helpers
-{
-    public static function post_class($class = '')
+if (!function_exists('jankx_template')) {
+    function jankx_template(string $defaultPath, string|array $templates, array $data = [], bool $echo = true, array $options = []): string
     {
-        $classes = get_post_class();
-        if ($class) {
-            array_push($classes, $class);
+        $engine = Context::get($defaultPath);
+        if (!$engine) {
+            $engine = Context::init($defaultPath, $options['engine'] ?? 'latte', $options);
         }
 
-        return implode(' ', $classes);
+        $content = $engine->render($templates, $data);
+        if ($echo) {
+            echo $content;
+        }
+        return $content;
     }
 }

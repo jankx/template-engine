@@ -9,7 +9,9 @@
             "email": "puleeno@gmail.com"
         }
     ],
-    "require": {},
+    "require": {
+        "latte/latte": "^3.0"
+    },
     "autoload": {
         "psr-4": {
             "Jankx\\TemplateEngine\\": "src/"
