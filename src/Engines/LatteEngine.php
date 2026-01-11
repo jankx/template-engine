@@ -15,6 +15,10 @@ class LatteEngine extends AbstractEngine
             $this->latte->setTempDirectory($tempDir);
         }
 
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            $this->latte->setAutoRefresh(true);
+        }
+
         // Register common WordPress functions
         $wp_functions = [
             'do_action',
@@ -27,8 +31,7 @@ class LatteEngine extends AbstractEngine
             'has_post_thumbnail',
             'get_the_post_thumbnail',
             'wp_trim_words',
-            '__',
-            '_e',
+
             'get_post_type',
             'get_post_type_object',
         ];
@@ -46,6 +49,55 @@ class LatteEngine extends AbstractEngine
                     });
                 }
             }
+        }
+
+        // Force register __ and _e using closures to ensure they work and avoid "Invalid function name" issues with string callbacks
+        // We check if the function is already registered to prevent errors, although in a fresh engine it shouldn't be.
+        $functions_to_register = [
+            '__' => function ($text, $domain = 'default') {
+                return __($text, $domain);
+            },
+            '_e' => function ($text, $domain = 'default') {
+                _e($text, $domain);
+            },
+            '_x' => function ($text, $context, $domain = 'default') {
+                return _x($text, $context, $domain);
+            },
+            'esc_html__' => function ($text, $domain = 'default') {
+                return esc_html__($text, $domain);
+            },
+            'esc_attr__' => function ($text, $domain = 'default') {
+                return esc_attr__($text, $domain);
+            },
+            'translate' => function ($text, $domain = 'default') {
+                return translate($text, $domain);
+            },
+        ];
+
+        foreach ($functions_to_register as $name => $callback) {
+            try {
+                // In Latte 3, we can just add it. If it exists, it throws.
+                // We wrap in try-catch to be safe if some other integration added it.
+                $this->latte->addFunction($name, $callback);
+            } catch (\Exception $e) {
+                // Ignore registration errors for duplicates
+            }
+        }
+
+        // Register as filters as well for pipe usage support
+
+        try {
+            $this->latte->addFilter('__', function ($text, $domain = 'default') {
+                return __($text, $domain);
+            });
+        } catch (\Exception $e) {
+        }
+
+        try {
+            $this->latte->addFilter('json', function ($data) {
+                return json_encode($data);
+            });
+        } catch (\Exception $e) {
         }
     }
 
