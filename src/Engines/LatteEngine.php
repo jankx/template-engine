@@ -35,6 +35,16 @@ class LatteEngine extends AbstractEngine
         foreach ($wp_functions as $func) {
             if (function_exists($func)) {
                 $this->latte->addFunction($func, $func);
+            } else {
+                // Fallback for translation functions if they don't exist (e.g. during some CLI or early boot)
+                if (in_array($func, ['__', '_e'])) {
+                    $this->latte->addFunction($func, function ($text, $domain = 'default') use ($func) {
+                        if ($func === '_e') {
+                            echo $text;
+                        }
+                        return $text;
+                    });
+                }
             }
         }
     }
